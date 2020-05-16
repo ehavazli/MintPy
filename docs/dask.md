@@ -18,15 +18,22 @@ The number of cores that are allocated to dask can be controlled using the `mint
     
  which will then allocate `multiprocessing.cpu_count()` number of workers to the dask computation. The default number of workers for LocalCluster is 4.
  
- Below is a figure depicting the running time of three datasets (Galapagos, Fernandina, and Kilauea) versus the number of allocated cores when running with the LocalCluster. These tests were conducted in May 2020, on the Stampede2 cluster, using 1 compute node from the 'skx-normal' queue ([node details here](https://portal.tacc.utexas.edu/user-guides/stampede2#overview-skxcomputenodes)). All dask options were left in there 'auto' state per `smallbaselineApp.cfg`. 
+ Below is a figure depicting the running time of three datasets (Galapagos, Fernandina, and Kilauea) versus the number of allocated cores when running with the LocalCluster. These tests were conducted in May 2020, on the Stampede2 cluster, using 1 compute node from the 'skx-normal' queue ([node details here](https://portal.tacc.utexas.edu/user-guides/stampede2#overview-skxcomputenodes)). Dask options were as follows:
+ 
+    mintpy.networkInversion.parallel    = yes
+    mintpy.networkInversion.cluster     = local
+    mintpy.networkInversion.config      = auto
+    mintpy.networkInversion.numWorkers  = ____ # varied by test
+    mintpy.networkInversion.walltime    = auto
  
 | Property              | Fernandina Dataset | Galapagos Dataset | Kilauea Dataset            |
 |-----------------------|--------------------|-------------------|----------------------------|
-| Input File Size       | 623 MB             | 233 MB            | 15 GB                      |
+| Input File Size       | 0.623 GB           | 0.233 GB          | 15.0 GB                    |
 | Dask Configuration    | None               | None              | None                       |
-| Cluster Memory Used   | 16 GB              | 16 GB             | 16GB (32 GB for 1-8 cores) |
+| Cluster Memory Used   | 16 GB              | 16 GB             | 16 GB (64 GB for 1-2 cores)|
 | Chunk Size Used       | 100e6 (1 GB)       | 100e6 (1 GB)      | 100e6 (1 GB)               | 
  
+![dask-local-cluster-performance](resources/dask-local-cluster-performance.png "Dask LocalCluster Peformance")
       
 
 ### Running Dask using an HPC Cluster
