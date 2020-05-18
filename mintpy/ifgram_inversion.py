@@ -1107,7 +1107,8 @@ def ifgram_inversion(ifgram_file='ifgramStack.h5', inps=None):
         #     NUM_WORKERS = mpc.cpu_count()
 
         # FA: the following command starts the jobs
-        cluster = get_cluster(cluster_type=inps.cluster, walltime=inps.walltime, config_name=inps.config)
+        print("DASK NUM WORKERS:", NUM_WORKERS)
+        cluster = get_cluster(cluster_type=inps.cluster, num_workers=NUM_WORKERS, walltime=inps.walltime, config_name=inps.config)
         cluster.scale(NUM_WORKERS)
 
         # This line needs to be in a function or in a `if __name__ == "__main__":` block. If it is in no function

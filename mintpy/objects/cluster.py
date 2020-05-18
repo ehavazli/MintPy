@@ -14,7 +14,7 @@ except ImportError:
     raise ImportError('Cannot import dask or dask_jobqueue!')
 
 
-def get_cluster(cluster_type, **kwargs):
+def get_cluster(cluster_type, num_workers=4, **kwargs):
     """Generic dask cluster wrapper"""
 
     # check input cluster type
@@ -28,7 +28,7 @@ def get_cluster(cluster_type, **kwargs):
 
     # No need to do the extra configuration checking if using LocalCluster
     if cluster_type == 'local':
-        return LocalCluster()
+        return LocalCluster(n_workers=num_workers, memory_limit='64GB')
 
     # check input config name
     if 'config_name' in kwargs.keys():
